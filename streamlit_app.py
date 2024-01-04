@@ -10,4 +10,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 
+sns.set()
 st.title("California 住宅価格の重回帰分析")
+
+# load dataset
+dataset = fetch_california_housing()
+df = pd.DataFrame(dataset.data)
+df.columns = dataset.feature_names
+df["PRICES"] = dataset.target
+
+if st.checkbox("show data"):
+    df
+
+if st.checkbox("Description"):
+    dataset.DESCR
+
+
