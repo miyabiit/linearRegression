@@ -25,4 +25,11 @@ if st.checkbox("show data"):
 if st.checkbox("Description"):
     dataset.DESCR
 
-
+# visualization
+if st.checkbox("Visualization"):
+    checked_variable = st.selectbox("please one variable:",df.drop(columns="PRICES").columns)
+    fig, ax = plt.subplots(figsize=(5,3))
+    ax.scatter(x=df[checked_variable], y=df["PRICES"], s=1)
+    plt.xlabel(checked_variable)
+    plt.ylabel("PRICES")
+    st.pyplot(fig)
