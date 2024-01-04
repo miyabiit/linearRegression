@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scikit-learn import preprocessing
+from sklearn import preprocessing
 from scikit-learn.datasets import load_boston
 from scikit-learn.model_selection import train_test_split
 
