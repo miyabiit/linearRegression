@@ -19,7 +19,7 @@ df = pd.DataFrame(dataset.data)
 df.columns = dataset.feature_names
 df["PRICES"] = dataset.target
 
-if st.checkbox("show data"):
+if st.checkbox("Show data"):
     df
 
 if st.checkbox("Description"):
@@ -33,3 +33,43 @@ if st.checkbox("Visualization"):
     plt.xlabel(checked_variable)
     plt.ylabel("PRICES")
     st.pyplot(fig)
+
+"""
+## 前処理
+"""
+# 学習時に使用しない変数を取り除く
+features_notUsed = st.multiselect("使用しない変数を選択してください", 
+                                  df.drop(columns = "PRICES").columns)
+df = df.drop(columns = features_notUsed)
+
+# 対数変換を行う
+left_column, right_column = st.columns([1,2])
+bool_log = left_column.radio("対数変換を行いますか？", ("Yes", "No"))
+df_log, log_features = df.copy(), []
+if bool_log == "Yes":
+    log_features = right_column.multiselect(
+            "対数変換を適用する目的変数、説明変数を選択してください",
+            df.columns)
+    df_log[log_features] = np.log(df_log[log_features]) 
+                                  
+# standard
+left_column, right_column = st.columns([1,2])
+bool_std = left_column.radio("Standard?", ("Yes", "No"))
+df_std = df_log.copy()
+if bool_std == "Yes":
+    std_features_notUsed = right_column.multiselect(
+            "標準化を適用しない変数を選択してください（例えば、質的変数)",
+            df_log.drop(columns=["PRICES"]).columns)
+    std_features_chosen = []
+    for name in df_log.drop(columns=["PRICES"]).columns:
+        if name in std_features_notUsed:
+            continue
+        else:
+            std_features_chosen.append(name)
+    sscaler = preprocessing.StandardScaler()
+    sscaler.fit(df_std[std_features_chosen])
+    df_std[std_features_chosen] = sscaler.transform(df_std[std_features_chosen])
+
+
+
+
