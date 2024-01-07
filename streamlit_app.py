@@ -70,6 +70,19 @@ if bool_std == "Yes":
     sscaler.fit(df_std[std_features_chosen])
     df_std[std_features_chosen] = sscaler.transform(df_std[std_features_chosen])
 
+"""
+## データセットを訓練用と検証用に分割
+"""
+
+left_column, right_column = st.columns([1,2])
+test_size = left_column.number_input(
+        "検証用のデータサイズ（1.0 - 0.0):",
+        min_value = 0.0,
+        max_value = 1.0,
+        value = 0.2,
+        step = 0.1
+        )
+
 
 
 
