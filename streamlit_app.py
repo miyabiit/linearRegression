@@ -82,7 +82,16 @@ test_size = left_column.number_input(
         value = 0.2,
         step = 0.1
         )
-
-
-
-
+random_seed = right_column.number_input(
+        "ランダムシードの設定(0以上):",
+        min_value = 0,
+        value = 0,
+        step = 1,
+        )
+# データセットの分割
+x_train, x_value, y_train, y_value = train_test_split(
+        df_std.drop(columns=["PRICES"]),
+        df_std["PRICES"],
+        test_size=test_size,
+        random_state=random_seed
+        )
