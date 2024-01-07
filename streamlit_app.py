@@ -106,10 +106,19 @@ if "PRICES" in log_features:
     y_pred_value, y_pred_train = np.exp(y_pred_value), np.exp(y_pred_train)
     y_value, y_train = np.exp(y_value), np.exp(y_train)
 
-
 """
 ## 結果の表示
 """
+
+# Coefficient
+if st.checkbox("Coefficient"):
+    coefficient = regressor.coef_
+    df_coef = pd.DataFrame(
+            coefficient,
+            columns=["Coefficient"],
+            index=df_std.drop(columns=["PRICES"]).columns)
+    df_coef
+
 
 # モデルの精度
 R2 = r2_score(y_value, y_pred_value)
@@ -162,4 +171,6 @@ ax.set_xlabel("PRICES")
 ax.set_ylabel("Prediction of PRICES")
 ax.legend(['TrainingData','ValidationData'])
 st.pyplot(fig) 
+
+# coefficient
 
